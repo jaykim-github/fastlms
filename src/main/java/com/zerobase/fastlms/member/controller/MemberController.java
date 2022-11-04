@@ -33,6 +33,7 @@ public class MemberController {
         boolean result = memberService.register(parameter);
         model.addAttribute("result", result);
 
+
         return "member/register_complete";
     }
 
