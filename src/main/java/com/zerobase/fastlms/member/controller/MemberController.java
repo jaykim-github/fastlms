@@ -6,6 +6,7 @@ import com.zerobase.fastlms.member.repository.MemberRepository;
 import com.zerobase.fastlms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -20,17 +21,30 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping(value = "/member/register")
-    public String register(){
+    public String register() {
         return "member/register";
     }
 
-    @PostMapping(value="/member/register")
-    public String registerSubmit(HttpServletRequest request,
-                                 MemberInput parameter){
-         System.out.println(parameter.toString());
+    @PostMapping(value = "/member/register")
+    public String registerSubmit(Model model, HttpServletRequest request,
+                                 MemberInput parameter) {
+        System.out.println(parameter.toString());
 
-         boolean result = memberService.register(parameter);
+        boolean result = memberService.register(parameter);
+        model.addAttribute("result", result);
+
 
         return "member/register_complete";
+    }
+
+    @GetMapping("/member/email_auth")
+    public String emailAuth(Model model, HttpServletRequest request){
+        String uuid = request.getParameter("id");
+        System.out.println(uuid);
+
+        boolean result = memberService.emailAuth(uuid);
+        model.addAttribute("result", result);
+
+        return "member/email_auth";
     }
 }
