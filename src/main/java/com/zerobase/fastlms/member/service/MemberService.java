@@ -5,4 +5,6 @@ import com.zerobase.fastlms.member.model.MemberInput;
 public interface MemberService {
 
     boolean register(MemberInput parameter);
+
+    boolean emailAuth(String uuid);
 }
