@@ -52,8 +52,8 @@ public class MailComponents {
         return result;
 
     }
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> origin/main
+
+
+

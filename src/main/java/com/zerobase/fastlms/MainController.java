@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @Controller
 public class MainController {
-    private final MailComponents mailComponents;
+    //private final MailComponents mailComponents;
     @RequestMapping("/")
     public String index(){
         return "index";

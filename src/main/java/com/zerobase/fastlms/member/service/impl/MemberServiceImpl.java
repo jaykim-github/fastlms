@@ -23,7 +23,7 @@ public class MemberServiceImpl implements MemberService {
     public boolean register(MemberInput parameter) {
 
         Optional<Member> optionalMember = memberRepository.findById(parameter.getUserId());
-        if(optionalMember.isPresent()){
+        if (optionalMember.isPresent()) {
             return false;
         }
         String uuid = UUID.randomUUID().toString();
@@ -55,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
 
         Optional<Member> optionalMember =
                 memberRepository.findByEmailAuthKey(uuid);
-        if(!optionalMember.isPresent()){
+        if (!optionalMember.isPresent()) {
             return false;
         }
 
@@ -66,10 +66,6 @@ public class MemberServiceImpl implements MemberService {
 
         return true;
     }
+}
 
 
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> origin/main
