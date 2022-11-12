@@ -35,6 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
+        http.headers().frameOptions().sameOrigin();
         //로그인 안해도 들어갈 수 있음
         http.authorizeRequests()
                 .antMatchers("/",

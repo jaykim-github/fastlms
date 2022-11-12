@@ -11,4 +11,10 @@ public interface CourseService {
     boolean add(CourseInput parameter);
 
     List<CourseDto> list(CourseParam parameter);
+
+    CourseDto getById(long id);
+
+    boolean set(CourseInput parameter);
+
+    boolean del(String idList);
 }
