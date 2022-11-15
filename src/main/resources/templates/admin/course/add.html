@@ -49,7 +49,7 @@ $(document).ready(function() {
 <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
 
 <div class="detail">
-    <form id="submitForm" method="post">
+    <form id="submitForm" method="post" enctype="multipart/form-data">
         <table>
             <tbody>
             <tr>
@@ -106,6 +106,12 @@ $(document).ready(function() {
                 <td>
                     <input th:value="${detail.saleEndDt}" type="text" name="saleEndDtText" required
                            placeholder="할인 종료일 입력"/>
+                </td>
+            </tr>
+            <tr>
+                <th>첨부 파일</th>
+                <td>
+                    <input type="file" name="file" />
                 </td>
             </tr>
             </tbody>
