@@ -19,8 +19,6 @@ public class UserAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
             msg = exception.getMessage();
         }
 
-
-
         setUseForward(true);
         setDefaultFailureUrl("/member/login?error=true");
         request.setAttribute("errorMessage", msg);

@@ -15,4 +15,7 @@ public class CourseInput {
     String saleEndDtText;
 
     String idList;
+    //Add
+    String filename;
+    String urlFilename;
 }

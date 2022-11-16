@@ -1,10 +1,8 @@
 package com.zerobase.fastlms.course.service;
 
-import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.course.dto.CourseDto;
 import com.zerobase.fastlms.course.entity.Course;
 import com.zerobase.fastlms.course.entity.TakeCourse;
-import com.zerobase.fastlms.course.entity.TakeCourseCode;
 import com.zerobase.fastlms.course.mapper.CourseMapper;
 import com.zerobase.fastlms.course.model.CourseInput;
 import com.zerobase.fastlms.course.model.CourseParam;
@@ -57,6 +55,8 @@ public class CourseServiceImpl implements CourseService{
                 .salePrice(parameter.getSalePrice())
                 .saleEndDt(saleEndDt)
                 .regDt(LocalDateTime.now())
+                .filename(parameter.getFilename())
+                .urlFilename(parameter.getUrlFilename())
                 .build();
 
         courseRepository.save(course);
@@ -104,6 +104,8 @@ public class CourseServiceImpl implements CourseService{
         course.setSalePrice(parameter.getSalePrice());
         course.setSaleEndDt(saleEndDt);
         course.setUdtDt(LocalDateTime.now());
+        course.setFilename(parameter.getFilename());
+        course.setUrlFilename(parameter.getUrlFilename());
 
         courseRepository.save(course);
         return true;
@@ -192,5 +194,13 @@ public class CourseServiceImpl implements CourseService{
         result.setResult(true);
         result.setMessage("");
         return result;
+    }
+
+    @Override
+    public List<CourseDto> listAll() {
+
+        List<Course> courseList = courseRepository.findAll();
+        return CourseDto.of(courseList);
+
     }
 }
