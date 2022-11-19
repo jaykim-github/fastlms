@@ -12,5 +12,4 @@
         order by sort_value desc
     </select>
 
-
 </mapper>

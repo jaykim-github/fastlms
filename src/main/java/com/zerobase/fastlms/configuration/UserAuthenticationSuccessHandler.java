@@ -1,6 +1,5 @@
 package com.zerobase.fastlms.configuration;
 
-import com.zerobase.fastlms.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -21,7 +20,7 @@ public class UserAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         log.warn("Login Success");
 
         List<String> roleNames = new ArrayList<>();
-        authentication.getAuthorities().forEach(authority->{
+        authentication.getAuthorities().forEach(authority -> {
             roleNames.add(authority.getAuthority());
         });
 

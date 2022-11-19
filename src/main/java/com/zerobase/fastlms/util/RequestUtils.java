@@ -14,21 +14,31 @@ public class RequestUtils {
     }
 
     public static String getClientIP(HttpServletRequest request) {
-        String ip = request.getHeader("X-FORWARDED-FOR");
+        String ip = request.getHeader("X-Forwarded-For");
 
-        //proxy 환경일 경우
-        if (ip == null || ip.length() == 0) {
+        //logger.info(">>>> X-FORWARDED-FOR : " + ip);
+
+        if (ip == null) {
             ip = request.getHeader("Proxy-Client-IP");
+            //logger.info(">>>> Proxy-Client-IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("WL-Proxy-Client-IP"); // 웹로직
+            //logger.info(">>>> WL-Proxy-Client-IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+            //logger.info(">>>> HTTP_CLIENT_IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+            //logger.info(">>>> HTTP_X_FORWARDED_FOR : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getRemoteAddr();
         }
 
-        //웹로직 서버일 경우
-        if (ip == null || ip.length() == 0) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-
-        if (ip == null || ip.length() == 0) {
-            ip = request.getRemoteAddr() ;
-        }
+        //logger.info(">>>> Result : IP Address : "+ip);
 
         return ip;
     }

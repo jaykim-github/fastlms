@@ -1,4 +1,4 @@
-package com.zerobase.fastlms.member.entity;
+package com.zerobase.fastlms.admin.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,20 +9,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
+@Data
+@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Entity
-public class LoginHistory {
+public class Banner {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;
-    private LocalDateTime loginDt;
-    private String userAgent;
-    private String clientIp;
+
+    String categoryName;
+    int sortValue;
+    boolean usingYn;
 }

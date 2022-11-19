@@ -5,11 +5,13 @@ import com.zerobase.fastlms.admin.mapper.MemberMapper;
 import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.components.MailComponents;
 import com.zerobase.fastlms.course.model.ServiceResult;
+import com.zerobase.fastlms.member.dto.LoginHistoryDto;
 import com.zerobase.fastlms.member.entity.LoginHistory;
 import com.zerobase.fastlms.member.entity.Member;
 import com.zerobase.fastlms.member.entity.MemberCode;
 import com.zerobase.fastlms.member.exception.MemberNotEmailAuthException;
 import com.zerobase.fastlms.member.exception.MemberStopUserException;
+import com.zerobase.fastlms.member.mapper.LoginHistoryMapper;
 import com.zerobase.fastlms.member.model.MemberInput;
 import com.zerobase.fastlms.member.model.ResetPasswordInput;
 import com.zerobase.fastlms.member.repository.LoginHistoryRepository;
@@ -39,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final LoginHistoryRepository loginHistoryRepository;
     private final MailComponents mailComponents;
-
+    private final LoginHistoryMapper loginHistoryMapper;
     private final MemberMapper memberMapper;
 
     @Override
@@ -177,6 +179,7 @@ public class MemberServiceImpl implements MemberService {
         long totalCount = memberMapper.selectListCount(parameter);
 
         List<MemberDto> list = memberMapper.selectList(parameter);
+
         if (!CollectionUtils.isEmpty(list)) {
             int i = 0;
             for (MemberDto x : list) {
@@ -232,6 +235,14 @@ public class MemberServiceImpl implements MemberService {
         Member member = optionalMember.get();
 
         return MemberDto.of(member);
+    }
+
+    @Override
+    public List<LoginHistoryDto> userLoginHistoryDetail(String userId) {
+        List<LoginHistoryDto> list = loginHistoryMapper.selectByUsername(userId);
+
+
+        return list;
     }
 
     @Override
@@ -333,6 +344,7 @@ public class MemberServiceImpl implements MemberService {
         member.setUserStatus(MemberCode.MEMBER_STATUS_WITHDRAW);
         member.setAddr("");
         member.setAddrDetail("");
+        member.setLastLoginDt(null);
         memberRepository.save(member);
 
         return new ServiceResult();
@@ -345,24 +357,25 @@ public class MemberServiceImpl implements MemberService {
             return new ServiceResult(false, "회원 정보가 존재하지 않습니다.");
         }
 
-        Optional<LoginHistory> optionalLoginHistory = loginHistoryRepository.findById(username);
+        Member member = optionalMember.get();
+        member.setLastLoginDt(LocalDateTime.now());
+        memberRepository.save(member);
+
         LoginHistory loginHistory = new LoginHistory();
-        if (!optionalLoginHistory.isPresent()) {
-            loginHistory.setUserId(username);
-            loginHistory.setUserAgent(userAgent);
-            loginHistory.setClientIp(clientIp);
-            loginHistory.setLoginDt(LocalDateTime.now());
-        } else {
-            loginHistory = LoginHistory.builder()
-                    .userId(username)
-                    .userAgent(userAgent)
-                    .loginDt(LocalDateTime.now())
-                    .clientIp(clientIp)
-                    .build();
-        }
+        loginHistory.setLoginDt(LocalDateTime.now());
+        loginHistory.setClientIp(clientIp);
+        loginHistory.setUserId(username);
+        loginHistory.setUserAgent(userAgent);
 
         loginHistoryRepository.save(loginHistory);
         return new ServiceResult();
+    }
+
+    @Override
+    public List<LoginHistory> loginHistoryList(String userId) {
+        //List<LoginHistory> list = loginHistoryRepository.
+
+        return null;
     }
 
 }
