@@ -12,17 +12,6 @@
         .list table th, .list table td{
             border:solid 1px #000;
             }
-        .search-form{
-             position: relative;
-            padding: 5px 0 10px 0;
-            text-align: right;
-        }
-        .search-form .total-count{
-            position: absolute;
-            left: 0; top:0;
-            height: 20px;
-            float: left;
-        }
 
         .pager{
             margin-top: 10px;
@@ -33,20 +22,95 @@
             font-weight: bold;
             color: red;
            }
+
+        .list .buttons {
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .list .buttons .total-count {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .list  .buttons a,.list  .buttons button {
+            border-width: 0;
+            background-color: transparent;
+            text-decoration: underline;
+            font-size: 14px;
+            line-height: 20px;
+            height: 20px;
+            color: #000;
+            cursor: pointer;
+        }
+
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+
+            $('#selectAll').on('click', function() {
+
+                var checked = $(this).is(':checked');
+
+
+                $('#dataList input[type=checkbox]').each(function(k, v) {
+                    $(this).prop('checked', checked);
+                });
+
+
+            });
+
+            $('#deleteButton').on('click', function() {
+
+                var $checked = $('#dataList input[type=checkbox]:checked');
+                if ($checked.length < 1) {
+                    alert(' 삭제할 데이터를 선택해 주세요. ');
+                    return false;
+                }
+
+                if (!confirm(' 선택한 데이터를 삭제하시겠습니까? ')) {
+                    return false;
+                }
+
+                var idList = [];
+                $.each($checked, function(k, v) {
+                    idList.push($(this).val());
+                });
+
+                console.log(idList);
+                console.log(idList.join(','));
+
+                var $deleteForm = $('form[name=deleteForm]');
+                $deleteForm.find('input[name=idList]').val( idList.join(',') );
+                $deleteForm.submit();
+
+            });
+
+
+        });
+
+    </script>
 </head>
 <body>
 <h1>배너 관리</h1>
 <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
-<div class="list">
 
-    <div class="search-form">
+<div class="list">
+    <div class="buttons">
         <p class="total-count">전체 <span th:text="${totalCount}"></span>개</p>
+        <br>
+        <a href="/admin/banner/add">강좌 등록</a>
+        <button id="deleteButton" type="button">선택 삭제</button>
     </div>
 
     <table>
         <thead>
         <tr>
+            <th>
+                <input id="selectAll" type="checkbox" />
+            </th>
             <th>NO
             </th>
             <th> 배너명
@@ -57,28 +121,18 @@
             </th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="dataList">
         <tr th:each="x : ${list}">
+            <td>
+                <input type="checkbox" th:value="${x.id}"/>
+            </td>
             <td th:text="${x.seq}"> 1</td>
             <td>
-            <a th:text="${x.userId}" th:href="${'detail?userId=' + x.userId}">
-                1
+            <a th:text="${x.bannerName}" th:href="${'edit?id=' + x.id}">
             </a>
             </td>
-            <td th:text="${x.userName}"> 1</td>
-            <td th:text="${x.phone}"> 1</td>
-            <td>
-                <p th:if="${x.emailAuthYn}">Y</p>
-                <p th:if="${x.emailAuthYn eq false}">N</p>
-            </td>
-            <td>
-                <p th:text="${x.regDt}"> 2021.01.01</p>
-            </td>
-            <td>
-                <p th:if="${x.adminYn}">Y</p>
-                <p th:if="${x.adminYn eq false}">N</p>
-            </td>
-            <td th:text="${x.lastLoginDt}">1</td>
+            <td> <img th:src="${x.imagePath}"/></td>
+            <td th:text="${x.regDt}">1</td>
         </tr>
         </tbody>
     </table>
@@ -88,5 +142,9 @@
     </div>
 
 </div>
+
+<form name="deleteForm" method="post" action="/admin/banner/delete">
+    <input type="hidden" name="idList"/>
+</form>
 </body>
 </html>

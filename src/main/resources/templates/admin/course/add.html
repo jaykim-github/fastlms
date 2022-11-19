@@ -6,18 +6,18 @@
     <style>
         .detail table{
             width: 100%;
-            border-collapse: collpse;
+            border-collapse: collapse;
         }
 
         .detail table th, .detail table td{
             border:solid 1px #000;
-         }
-         .buttons{
+        }
+        .buttons{
             text-align: center;
             margin-top: 20px;
-          }
+        }
 
-         .buttons a, .buttons button{
+        .buttons a, .buttons button{
             border-width: 0;
             background-color: transparent;
             text-decoration: underline;
@@ -26,7 +26,7 @@
             height :20px;
             color: #000;
             cursor: pointer;
-      }
+        }
 
 
 
@@ -35,12 +35,12 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
-       $('#submitForm').on('submit', function(){
-        oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
-       });
-  });
+        $('#submitForm').on('submit', function(){
+            oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+        });
+    });
 
 
 </script>
@@ -127,13 +127,13 @@ $(document).ready(function() {
 
 <script type="text/javascript" src="/res/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
-var oEditors = [];
-nhn.husky.EZCreator.createInIFrame({
- oAppRef: oEditors,
- elPlaceHolder: "contents",
- sSkinURI: "/res/se2/SmartEditor2Skin.html",
- fCreator: "createSEditor2"
-});
+    var oEditors = [];
+    nhn.husky.EZCreator.createInIFrame({
+        oAppRef: oEditors,
+        elPlaceHolder: "contents",
+        sSkinURI: "/res/se2/SmartEditor2Skin.html",
+        fCreator: "createSEditor2"
+    });
 
 </script>
 </body>

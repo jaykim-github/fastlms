@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 화면</title>
+    <style>
+        .detail table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .detail table th, .detail table td{
+            border:solid 1px #000;
+        }
+        .buttons{
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .buttons a, .buttons button{
+            border-width: 0;
+            background-color: transparent;
+            text-decoration: underline;
+            font-size: 12px;
+            line-height: 20px;
+            height :20px;
+            color: #000;
+            cursor: pointer;
+        }
+
+
+
+    </style>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+
+        // $('#submitForm').on('submit', function(){
+        //  oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+        // });
+    });
+
+
+</script>
+<body>
+<h1>배너 관리 - 강좌 등록</h1>
+<div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+
+<div class="detail">
+    <form id="submitForm" method="post" enctype="multipart/form-data">
+        <table>
+            <tbody>
+
+            <tr>
+                <th>배너명</th>
+                <td>
+                    <input th:value="${detail.bannerName}" type="text" name="bannerName" required placeholder="배너명 입력"/>
+                </td>
+            </tr>
+            <tr>
+                <th>배너 파일</th>
+                <td>
+                    <input type="file" name="file" />
+                </td>
+            </tr>
+            <tr>
+                <th>대체 텍스트</th>
+                <td>
+                    <input th:value="${detail.alterText}" type="text" name="alterText" required placeholder="대체 텍스트 입력"/>
+                </td>
+            </tr>
+            <tr>
+                <th>링크 주소</th>
+                <td>
+                    <textarea th:text="${detail.toUrl}" type="text" name="toUrl" required placeholder="링크 주소 입력"/>
+                </td>
+            </tr>
+            <tr>
+                <th>오픈 방법</th>
+                <td>
+                    <select name="target">
+                        <option value="NEW">새창</option>
+                        <option value="CUR">현재 창</option>
+                    </select>
+
+                </td>
+            </tr>
+            <tr>
+                <th>정렬 순서</th>
+                <td>
+                    <input th:value="${detail.sortValue}" type="text" name="sortValue" required placeholder="정렬 순서 입력"/>
+                </td>
+            </tr>
+            <tr>
+                <th>공개 여부</th>
+                <td>
+                    <input type="hidden" name="_usingYn" value="on"><!-- 히든 필드 추가 -->
+                    <input th:if="${!editMode}" type="checkbox" id="usingYn" name="usingYn" value="true"/>
+                    <input th:if="${editMode}" th:checked="${detail.usingYn}" type="checkbox"  name="usingYn" value="true"/>
+                    공개
+                </td>
+            </tr>
+
+
+            </tbody>
+        </table>
+
+        <div class="buttons">
+            <button th:if="${editMode}" type="submit"> 배너 수정 하기</button>
+            <button th:if="${!editMode}" type="submit"> 배너 등록 하기</button>
+            <a href="/admin/banner/list">목록으로 </a>
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>
