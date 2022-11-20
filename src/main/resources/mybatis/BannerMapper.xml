@@ -17,4 +17,11 @@
     </select>
 
 
+    <select id="selectBannerUse" resultType="com.zerobase.fastlms.banner.dto.BannerDto">
+        select * from banner
+        where using_yn = #{usingYn}
+        order by sort_value
+    </select>
+
+
 </mapper>

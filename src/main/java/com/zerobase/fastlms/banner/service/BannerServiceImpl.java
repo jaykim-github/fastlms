@@ -30,11 +30,6 @@ public class BannerServiceImpl implements BannerService{
 
     @Override
     public boolean add(BannerInput parameter) {
-        System.out.println("서비스=====================");
-        System.out.println(parameter.toString());
-        System.out.println("=====================");
-
-
         Banner banner = Banner.builder()
                 .bannerName(parameter.getBannerName())
                 .regDt(LocalDateTime.now())
@@ -64,6 +59,12 @@ public class BannerServiceImpl implements BannerService{
                 i++;
             }
         }
+        return list;
+    }
+
+    @Override
+    public List<BannerDto> mainBannerList() {
+        List<BannerDto> list = bannerMapper.selectBannerUse(true);
         return list;
     }
 

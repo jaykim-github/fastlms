@@ -38,7 +38,7 @@ public class BannerDto {
     public static BannerDto of(Banner banner) {
         return BannerDto.builder()
                 .id(banner.getId())
-                .imagePath(builder().imagePath)
+                .imagePath(banner.getImagePath())
                 .bannerName(banner.getBannerName())
                 .alterText(banner.getAlterText())
                 .toUrl(banner.getToUrl())

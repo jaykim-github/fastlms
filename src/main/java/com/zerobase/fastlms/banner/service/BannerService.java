@@ -15,5 +15,7 @@ public interface BannerService {
 
     List<BannerDto> list(BannerParam parameter);
 
+    List<BannerDto> mainBannerList();
+
     boolean del(String idList);
 }

@@ -3,14 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        bxslider{
+            margin: 0 auto;
+            width: 640px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.bxslider').bxSlider( {
+                // mode: 'horizontal',// 가로 방향 수평 슬라이드
+                // speed: 500,        // 이동 속도를 설정
+                // pager: true,      // 현재 위치 페이징 표시 여부 설정
+                // moveSlides: 1,     // 슬라이드 이동시 개수
+                // auto: true,        // 자동 실행 여부
+                // autoHover: true,   // 마우스 호버시 정지 여부
+                // controls: true    // 이전 다음 버튼 노출 여부
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 </head>
 <body>
     <h1> 메인 페이지</h1>
 
 <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
-<div>
-    <img src="/files/2022/11/bd44fe4331254efca72dcaecf7199300.PNG"/>
+<div class="home__slider">
+    <div class="bxslider">
+        <div th:each="x : ${list}">
+        <li>
+            <a th:if="${x.target == 'CUR'}" th:href="${x.toUrl}"> <img th:src="${x.imagePath}" th:alt="${x.alterText}"></a>
+            <a th:if="${x.target == 'NEW'}" th:href="${x.toUrl}" target="_blank"> <img th:src="${x.imagePath}" th:alt="${x.alterText}"></a>
+        </li>
+        </div>
+    </div>
+
 </div>
+
+
 </body>
 </html>

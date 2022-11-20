@@ -11,4 +11,6 @@ public interface BannerMapper {
 
     long selectListCount(BannerParam parameter);
     List<BannerDto> selectList(BannerParam parameter);
+
+    List<BannerDto> selectBannerUse(boolean usingYn);
 }

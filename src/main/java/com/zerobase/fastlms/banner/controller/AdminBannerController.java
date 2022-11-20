@@ -103,10 +103,6 @@ public class AdminBannerController extends BaseController {
         //parameter.setFilename(saveFilename);
         parameter.setImagePath(urlFilename);
 
-        System.out.println("컨트롤럴=====================");
-        System.out.println(urlFilename);
-        System.out.println("=====================");
-
         boolean editMode = request.getRequestURI().contains("/edit");
         if(editMode){
             long id = parameter.getId();
