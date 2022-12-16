@@ -14,10 +14,6 @@
 
 <br>
 
-:black_circle: 프로젝트 기능
-
-<br>
-
 :bulb: 프로젝트 기능
 
 <br>
